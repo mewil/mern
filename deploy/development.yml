@@ -1,0 +1,19 @@
+version: '2'
+services:
+  mern_db:
+    extends:
+      file: docker-compose.yml
+      service: mern_db
+  mern_website:
+    extends:
+      file: docker-compose.yml
+      service: mern_website
+    ports:
+      - "3000:3000"
+    volumes:
+      - ..:/usr/src/app
+    command: sh -c "yarn install && nodemon app.js"
+    environment:
+      - DEBUG
+    links:
+      - mern_db
